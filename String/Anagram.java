@@ -42,7 +42,6 @@ public class Anagram {
         String str2 = "silent";
 
         Anagram a = new Anagram();
-
         System.out.println(a.anagram(str, str2));
 
         //for boolean return type

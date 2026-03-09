@@ -11,6 +11,7 @@ public class MissingNum {
         for(int a : arr){
             sum+=a;
         }
+        
         System.out.println(asum-sum);
     }
 

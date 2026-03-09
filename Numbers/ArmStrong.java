@@ -18,12 +18,15 @@ public class ArmStrong {
           return "is armstrong";
         else
           return "not aramstrong";
+          
     }
+
     public static void main(String[] args) {
         
         int num = 153;
 
         ArmStrong a = new ArmStrong();
         System.out.println(a.armStrong(num));
+
     }
 }

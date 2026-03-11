@@ -19,7 +19,7 @@ public class FirstNonRepeating {
               return ch;
         }
         
-        return ' ';        
+        return ' ';      
     }
 
     public static void main(String[] args) {
@@ -27,6 +27,5 @@ public class FirstNonRepeating {
         String str = "aabbccddeff";
         FirstNonRepeating freq = new FirstNonRepeating();
         char ch = freq.freq(str);
-
     }
 }

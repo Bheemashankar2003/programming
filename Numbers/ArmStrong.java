@@ -17,7 +17,7 @@ public class ArmStrong {
         if(temp == sum)
           return "is armstrong";
         else
-          return "not aramstrong";
+          return "not armstrong";
           
     }
 

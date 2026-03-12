@@ -6,13 +6,11 @@ public class Dublicate {
         
         String s = "programming";
         String ss = "";
-        
+
         for(int i = 0;i<s.length();i++){
-            int count = 0;
             char ch = s.charAt(i);
-            if(ss.indexOf(ch) == -1){
+            if(ss.indexOf(ch) == -1)
                 ss+=ch;
-            }
         }
         System.out.println(ss);
     }

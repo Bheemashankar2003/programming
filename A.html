@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+
+<title>Bheemu Pay</title>
+
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #eef3f9;
+}
+
+/* Layout */
+.payment-container {
+    display: flex;
+    max-width: 800px;
+    margin: 60px auto;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* LEFT PANEL */
+.left-panel {
+    width: 40%;
+    background: linear-gradient(135deg, #2196f3, #00bcd4);
+    color: white;
+    padding: 30px;
+}
+
+.left-panel h4 {
+    margin-bottom: 20px;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.total {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* RIGHT PANEL */
+.right-panel {
+    width: 60%;
+    background: white;
+    padding: 30px;
+}
+
+input, select {
+    border-radius: 10px !important;
+    padding: 12px !important;
+}
+
+/* Button */
+.pay-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background: linear-gradient(135deg, #2196f3, #00bcd4);
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.pay-btn:hover {
+    transform: scale(1.02);
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.95);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Loader */
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #ddd;
+    border-top: 5px solid #2196f3;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+.overlay p {
+    margin-top: 10px;
+    font-weight: 500;
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #eef3f9;
+
+    /* ✅ Center everything */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+
+    background: linear-gradient(120deg, #89f7fe, #66a6ff);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+
+    background: linear-gradient(-45deg, #2196f3, #00bcd4, #6a11cb, #2575fc);
+    background-size: 400% 400%;
+
+    animation: gradientMove 8s ease infinite;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+
+    /* 🔥 Multi gradient base */
+    background: linear-gradient(-45deg, #2196f3, #00bcd4, #6a11cb, #2575fc);
+    background-size: 400% 400%;
+    animation: gradientMove 10s ease infinite;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    overflow: hidden;
+    position: relative;
+}
+
+/* 🌊 Gradient animation */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ✨ Floating blobs */
+body::before,
+body::after {
+    content: "";
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.6;
+    animation: float 8s ease-in-out infinite;
+}
+
+/* 🔵 Blob 1 */
+body::before {
+    background: #00bcd4;
+    top: -100px;
+    left: -100px;
+}
+
+/* 🟣 Blob 2 */
+body::after {
+    background: #6a11cb;
+    bottom: -120px;
+    right: -120px;
+}
+
+/* 🔄 Floating motion */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) translateX(0px);
+    }
+    50% {
+        transform: translateY(30px) translateX(20px);
+    }
+}
+
+.payment-container {
+    backdrop-filter: blur(20px);
+    background: rgba(255,255,255,0.85);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="payment-container">
+
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+        <h4>Bheemu Pay</h4>
+
+        <div class="item">
+            <span>Course</span>
+            <span id="courseDisplay">--</span>
+        </div>
+
+        <div class="item">
+            <span>Amount</span>
+            <span>₹ <span id="displayAmount">0</span></span>
+        </div>
+
+        <div class="total">
+            Total: ₹ <span id="displayAmount2">0</span>
+        </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+
+        <h5 class="mb-3">Secure Payment</h5>
+
+        <input type="text" id="name" placeholder="Full Name" class="form-control mb-2">
+        <input type="email" id="email" placeholder="Email" class="form-control mb-2">
+        <input type="number" id="phno" placeholder="Phone" class="form-control mb-2">
+
+        <select id="course" class="form-select mb-2">
+            <option selected disabled>Select Course</option>
+            <option value="Java">Java</option>
+            <option value="Python">Python</option>
+            <option value="DevOps">DevOps</option>
+            <option value="Cyber Security">Cyber Security</option>
+        </select>
+
+        <input type="number" id="amount" placeholder="Amount" class="form-control mb-3">
+
+        <button id="payBtn" class="pay-btn">
+            Pay Now
+        </button>
+
+    </div>
+
+</div>
+
+<!-- Animation Overlay -->
+<div id="paymentOverlay" class="overlay hidden">
+    <div class="loader"></div>
+    <p>Payment Initiated...</p>
+</div>
+
+<!-- Razorpay -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+
+// Live updates
+const amountInput = document.getElementById('amount');
+const displayAmount = document.getElementById('displayAmount');
+const displayAmount2 = document.getElementById('displayAmount2');
+const courseSelect = document.getElementById('course');
+const courseDisplay = document.getElementById('courseDisplay');
+
+amountInput.addEventListener('input', () => {
+    displayAmount.innerText = amountInput.value || 0;
+    displayAmount2.innerText = amountInput.value || 0;
+});
+
+courseSelect.addEventListener('change', () => {
+    courseDisplay.innerText = courseSelect.value;
+});
+
+// Payment
+document.getElementById("payBtn").onclick = async function () {
+
+    if (!amount.value) {
+        alert("Enter amount");
+        return;
+    }
+
+    // Show animation
+    document.getElementById("paymentOverlay").classList.remove("hidden");
+
+    try {
+        const response = await fetch('http://localhost:8080/create-order', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                name: name.value,
+                email: email.value,
+                phno: phno.value,
+                course: course.value,
+                amount: amount.value,
+                currency: 'INR'
+            })
+        });
+
+        const order = await response.json();
+
+        var options = {
+            key: "rzp_test_SQgfgxepcu2SjR",
+            amount: order.amount,
+            currency: "INR",
+            name: "Bheemu Pay",
+            description: "Course Payment",
+            order_id: order.razorpayOrderId,
+
+            handler: function (res) {
+                alert("✅ Payment Successful\nPayment ID: " + res.razorpay_payment_id);
+            },
+
+            prefill: {
+                name: name.value,
+                email: email.value,
+                contact: phno.value
+            },
+
+            theme: {
+                color: "#2196f3"
+            }
+        };
+
+        setTimeout(() => {
+            new Razorpay(options).open();
+            document.getElementById("paymentOverlay").classList.add("hidden");
+        }, 1200);
+
+    } catch (err) {
+        alert("Error creating order");
+        console.error(err);
+    }
+};
+
+</script>
+
+</body>
+</html>

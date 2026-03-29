@@ -2,26 +2,44 @@ package String;
 
 import java.util.HashMap;
 
+//important
 public class NonRepeat {
-    
+
     public static void main(String[] args) {
         
-        String s = "aabbccddeff";
+        String s ="programming";
 
-        HashMap<Character,Integer> hm = new HashMap<>();
+        int [] count = new int[256];
 
-        //freq
-        for(char c: s.toCharArray()){
-            hm.put(c, hm.getOrDefault(c, 0)+1);
+        for(int i = 0;i<s.length();i++){
+            count[s.charAt(i)]++;
         }
 
-        //
-        for(char cc:s.toCharArray()){
-            if(hm.get(cc)==1){
-                System.out.println(cc);
-                return;
+        for(int j = 0;j<s.length();j++){
+            if(count[s.charAt(j)]==1){
+                System.out.println("non-repeating charector "+s.charAt(j));
+                break;
             }
         }
-        System.out.println("no char found ");
     }
+    
+    // public static void main(String[] args) {
+        
+    //     String s = "aabbccddeff";
+
+    //     HashMap<Character,Integer> hm = new HashMap<>();
+
+    //     for(char ch : s.toCharArray()){
+    //         hm.put(ch, hm.getOrDefault(ch, 0)+1);
+    //     }
+
+    //     for(char ch : s.toCharArray()){
+    //         if(hm.get(ch)==1){
+    //             System.out.println("element found: "+ch);
+    //             return;
+    //         }
+    //     }
+
+    //     System.out.println("element not found");
+    // }
 }

@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Bheemu Pay</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
+
+body{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  background:
+    radial-gradient(circle at 20% 20%, #2a2a72, transparent),
+    radial-gradient(circle at 80% 80%, #009ffd, transparent),
+    #0f0f1a;
+}
+
+/* MAIN */
+.main-box{
+  width:950px;
+  display:flex;
+  border-radius:24px;
+
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(25px);
+
+  border:1px solid rgba(255,255,255,0.08);
+  box-shadow:0 20px 60px rgba(0,0,0,0.6);
+  overflow:hidden;
+}
+
+/* LEFT */
+.left{
+  width:40%;
+  padding:30px;
+  border-right:1px solid rgba(255,255,255,0.08);
+  color:white;
+}
+
+/* 💳 CARD PREVIEW */
+.card-preview{
+  height:180px;
+  border-radius:16px;
+  padding:20px;
+
+  background:linear-gradient(135deg,#6a11cb,#2575fc);
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+.card-number{
+  font-size:18px;
+  letter-spacing:2px;
+}
+
+.card-name{
+  font-size:14px;
+  opacity:0.8;
+}
+
+.card-amount{
+  font-size:20px;
+  font-weight:600;
+}
+
+/* RIGHT */
+.right{
+  width:60%;
+  padding:30px;
+}
+
+h4{
+  color:white;
+  margin-bottom:15px;
+}
+
+/* INPUTS */
+input, select{
+  width:100%;
+  padding:12px;
+  margin-bottom:12px;
+
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.08);
+
+  background:rgba(255,255,255,0.05);
+  color:white;
+  outline:none;
+
+  transition:0.3s;
+}
+
+/* 🎉 Glow on focus */
+input:focus, select:focus{
+  border:1px solid #6a11cb;
+  box-shadow:0 0 10px rgba(106,17,203,0.6);
+}
+
+/* BUTTON */
+.btn-pay{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:none;
+
+  background:linear-gradient(135deg,#6a11cb,#2575fc);
+  color:white;
+
+  cursor:pointer;
+  transition:0.3s;
+  position:relative;
+}
+
+/* hover */
+.btn-pay:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 25px rgba(106,17,203,0.6);
+}
+
+/* ⚡ loading */
+.btn-pay.loading{
+  pointer-events:none;
+  opacity:0.7;
+}
+
+.btn-pay.loading::after{
+  content:"";
+  width:20px;
+  height:20px;
+  border:3px solid white;
+  border-top:3px solid transparent;
+  border-radius:50%;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+  100%{ transform:translate(-50%,-50%) rotate(360deg); }
+}
+
+@media(max-width:768px){
+  .main-box{
+    flex-direction:column;
+    width:95%;
+  }
+  .left,.right{
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="main-box">
+
+  <!-- LEFT (CARD PREVIEW) -->
+  <div class="left">
+
+    <div class="card-preview">
+      <div class="card-number">•••• •••• •••• 4242</div>
+
+      <div>
+        <div class="card-name" id="previewName">Your Name</div>
+        <div class="card-amount" id="previewAmount">₹0</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+
+    <h4>Make Payment</h4>
+
+    <input type="text" id="name" placeholder="Full Name">
+    <input type="email" id="email" placeholder="Email">
+    <input type="number" id="phno" placeholder="Phone Number">
+
+    <select id="course">
+      <option selected>- Select Course -</option>
+      <option value="Java">Java</option>
+      <option value="Python">Python</option>
+      <option value="DevOps">DevOps</option>
+    </select>
+
+    <input type="number" id="amount" placeholder="Amount">
+
+    <button id="rzp-button" class="btn-pay">Proceed to Pay</button>
+
+  </div>
+
+</div>
+
+<!-- Razorpay -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+// 🎯 Auto amount based on course
+const prices = {
+  Java: 499,
+  Python: 399,
+  DevOps: 699
+};
+
+document.getElementById("course").addEventListener("change", function(){
+  const value = this.value;
+  if(prices[value]){
+    document.getElementById("amount").value = prices[value];
+    document.getElementById("previewAmount").innerText = "₹" + prices[value];
+  }
+});
+
+// 💳 Live preview name
+document.getElementById("name").addEventListener("input", function(){
+  document.getElementById("previewName").innerText =
+    this.value || "Your Name";
+});
+
+// 💰 Update amount manually
+document.getElementById("amount").addEventListener("input", function(){
+  document.getElementById("previewAmount").innerText =
+    "₹" + (this.value || 0);
+});
+
+// ⚡ Loading animation
+document.getElementById("rzp-button").onclick = async function(e){
+  this.classList.add("loading");
+
+  setTimeout(()=>{
+    this.classList.remove("loading");
+  },2000);
+};
+</script>
+
+</body>
+</html>

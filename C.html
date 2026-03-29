@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Successful</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: #eef1f6;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Card */
+.card {
+    width: 360px;
+    background: linear-gradient(135deg, #f2f3f7, #e6d7c3);
+    border-radius: 20px;
+    padding: 35px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* Top Icon */
+.icon {
+    width: 50px;
+    height: 50px;
+    background: #22c55e;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon::after {
+    content: "✔";
+    color: white;
+    font-size: 22px;
+}
+
+/* Heading */
+h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1e3a8a;
+    margin-bottom: 8px;
+}
+
+.sub {
+    font-size: 14px;
+    color: #475569;
+    margin-bottom: 20px;
+}
+
+/* Divider */
+.divider {
+    height: 1px;
+    background: #cbd5e1;
+    margin: 20px 0;
+}
+
+/* Section */
+.section {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.label {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 5px;
+}
+
+.value {
+    font-size: 14px;
+    font-weight: 500;
+    color: #0f172a;
+}
+
+/* Status */
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-icon {
+    width: 18px;
+    height: 18px;
+    background: #22c55e;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.status-icon::after {
+    content: "✔";
+    color: white;
+    font-size: 12px;
+}
+
+/* Amount highlight */
+.amount {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2563eb;
+}
+
+/* Payment Method Box */
+.method-box {
+    display: flex;
+    align-items: center;
+    background: #d4d4f5;
+    padding: 10px;
+    border-radius: 10px;
+    gap: 10px;
+}
+
+.logo {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(to right, red, orange);
+    border-radius: 50%;
+}
+
+/* Thank you */
+.thankyou {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #0f172a;
+    font-weight: 500;
+    text-align: center;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <div class="icon"></div>
+
+    <h2>Payment Successful !</h2>
+    <p class="sub">We have received your membership request.</p>
+
+    <div class="divider"></div>
+
+    <!-- Status -->
+    <div class="section">
+        <div class="label">Status</div>
+        <div class="value status">
+            <div class="status-icon"></div>
+            Successful
+        </div>
+    </div>
+
+    <!-- Amount -->
+    <div class="section">
+        <div class="label">Amount</div>
+        <div class="value amount">₹<span id="amount">499</span></div>
+    </div>
+
+    <!-- Date + Time -->
+    <div class="section">
+        <div class="label">Date & Time</div>
+        <div class="value" id="datetime"></div>
+    </div>
+
+    <!-- Payment Method -->
+    <div class="section">
+        <div class="label">Payment Method</div>
+        <div class="method-box">
+            <div class="logo"></div>
+            <div>
+                <div id="method">UPI</div>
+                <div style="font-size:12px;" id="methodDetail">Google Pay</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thank you -->
+    <div class="thankyou">
+        Thank you for your payment 🙏
+    </div>
+
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+
+// Dynamic values
+document.getElementById("amount").innerText = params.get("amount") || "499";
+document.getElementById("method").innerText = params.get("method") || "UPI";
+document.getElementById("methodDetail").innerText = params.get("detail") || "Google Pay";
+
+// Date + Time format
+const now = new Date();
+
+const options = {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+};
+
+const date = now.toLocaleDateString('en-IN', options);
+
+let hours = now.getHours();
+let minutes = now.getMinutes();
+minutes = minutes < 10 ? "0" + minutes : minutes;
+
+document.getElementById("datetime").innerText = `${date}, ${hours}:${minutes}`;
+</script>
+
+</body>
+</html>
